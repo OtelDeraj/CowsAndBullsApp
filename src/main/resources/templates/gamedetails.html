@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Guess The Number | Games</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    </head>
+    <body>
+        
+        <a class="btn btn-primary" href="/games">Back</a>
+        <!-- the th:action below needs to be filled with the actual desired path destination -->
+        <form th:action="${'/games/' + gameId}" method="POST">
+            <div class="container">
+                <div class="form-group row">
+                    <label for="guessString" class="col-form-label col-md-3 text-center">Guess: </label>
+                    <input th:value="${guess.guessString}" name="guessString" class="col-md-9"/>
+                    <div th:if="${#fields.hasErrors('guess.guessString')}" class="offset-md-3 col-md-9 text-center mt-2">
+                        <p th:each="error: ${#fields.errors('guess.guessString')}" th:text="${error}" class="alert alert-danger"></p>
+                    </div>
+                </div>
+                <input name="gameId" type="hidden" th:value="${guess.gameId}"/>
+                <!--                <div class="form-group row">
+                                    <label for="gameId" class="col-form-label">Game ID: </label>
+                                    <input th:value="${guess.gameId}" name="gameId" type="number"/>
+                                </div>-->
+                <center>
+                    <button class="btn btn-lg btn-primary btn-block">Make Guess</button>
+                </center>
+            </div>    
+        </form>
+
+        <div class="container">
+            <div class="row">
+                <div th:if="${rounds != null && !rounds.isEmpty()}"   th:each="round: ${rounds}" class="card col-md-12 m-2">
+                    <div class="card-body">
+                        <p class="card-text" th:text="${round.gameId}"></p>
+                        <p class="card-text" th:text="${round.guess}"></p>
+                        <p class="card-text" th:text="${round.timeOfGuess}"></p>
+                        <p class="card-text" th:text="${round.result}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </body>
+</html>
